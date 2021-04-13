@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-04-09T16:34:01.883Z</updated>
+  <updated>2021-04-13T12:16:43.226Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>笔记—CSS定位布局</title>
+    <link href="http://example.com/2021/04/13/css%E5%AE%9A%E4%BD%8D%E5%B8%83%E5%B1%80/"/>
+    <id>http://example.com/2021/04/13/css%E5%AE%9A%E4%BD%8D%E5%B8%83%E5%B1%80/</id>
+    <published>2021-04-13T11:08:06.553Z</published>
+    <updated>2021-04-13T12:16:43.226Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="定位布局（position）"><a href="#定位布局（position）" class="headerlink" title="定位布局（position）"></a>定位布局（<code>position</code>）</h1><p>​    CSS定位可以设定元素在文档中的位置，会将标签（元素）<u>转换成块级标签</u></p><p>​    原理是把页面左上角的点定位为坐标为（0，0）的原点，然后以像素为单位将整个网页构建成一个坐标系统。其中x轴与数学坐标系方向相同，越往右数字越大；y轴与数学坐标系方向相反，越往下数字越大。</p><p>​    使用定位需要设置HTML元素的position的属性值，并使用 top、bottom、left 和 right 属性设置元素的位置，一般来说从水平和垂直方向各选一个属性即可。</p><hr><h2 id="定位分类（属性值）"><a href="#定位分类（属性值）" class="headerlink" title="定位分类（属性值）"></a>定位分类（属性值）</h2><ul><li><p><strong>静态定位</strong>：</p><p><code>position:static;</code></p><p>默认值，没有定位， 始终根据页面的正常流进行定位，不能设置偏移值( left | top | right | bottom )，占用标准流（文档流）</p></li><li><p><strong>相对定位</strong>：</p><p><code>position:relative;</code></p><p>可以通过设定偏移值改变位置，无论是否进行移动，元素仍然占据原来的空间（标准流），因此，移动元素会导致它覆盖其它框</p><p><u>相对于自身所占的位置做偏移</u>    </p></li></ul><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.box2</span>&#123;</span><br><span class="line"><span class="attribute">position</span>:relative;</span><br><span class="line"><span class="attribute">top</span>:<span class="number">20px</span>;</span><br><span class="line"><span class="attribute">left</span>:<span class="number">30px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><img src="https://note.youdao.com/yws/api/personal/file/8D2AC2C6373445778D4141F97386FCE5?method=download&shareKey=ce76b4a48f21ace982d64f5e33f8103b" alt="relative"></p><ul><li><p><strong>绝对定位</strong>：</p><p><code>position:absolute;</code></p><p>相对于其包含块定位，包含块可能是文档中的另一个元素（有定位的父级元素）者是初始包含块body（当父级元素没有定位属性时）。</p><p>会脱离文档流（不占据空间），后边的元素会挤占它的空间，它则覆盖在上方。</p><blockquote><p>在项目开发中，一般用绝对定位与相对定位结合使用，这时它相对的父级是relative定义的元素 （父相子绝）</p></blockquote></li><li><p><strong>固定定位</strong>：</p><p><code>position:fixed;</code></p><p>脱离文档流，相对于浏览器窗口左上角（0，0）做偏移， 即使滚动页面，它也始终位于同一位置，在开发中一般用来固定导航栏，固定浮窗（悬浮广告🙄）</p></li><li><p><strong>粘性定位</strong>：</p><p><code>position:sticky;</code></p><p> 根据用户的滚动位置进行定位。 </p><p>相当于<code>position:relative;</code> 和 <code>position:fixed;</code>的结合体，当元素在窗口时， 会被相对定位， 直到在窗口中遇到给定的偏移位置为止 - 将其固定。</p><p>兼容性： IE、Edge 15 以及更早的版本不支持粘性定位。 Safari 需要 -webkit- 前缀 （<code> position: -webkit-sticky;</code>）</p></li></ul><hr><h2 id="层叠效果"><a href="#层叠效果" class="headerlink" title="层叠效果"></a>层叠效果</h2><p> 当多个元素添加绝对定位，元素可能会叠加在一起。 </p><p> <code>z-index</code> 属性设置元素的堆栈顺序 </p><p>z 轴定义为垂直延伸到显示区的轴。如果为正数，则离用户更近，为负数则表示离用户更远。 </p><p>属性值：</p><table><thead><tr><th>值</th><th>说明</th></tr></thead><tbody><tr><td>auto</td><td>默认。堆叠顺序与父元素相等</td></tr><tr><td>[number]</td><td>设置元素的堆叠顺序。</td></tr><tr><td>inherit</td><td>规定应该从父元素继承 z-index 属性的值。（IE不支持该属性值）</td></tr></tbody></table><p><em>注释</em>：</p><ul><li>z-index 仅能在定位元素上奏效</li><li>用在static（相当于没有定位）将无效 </li><li>文档流默认的z-index 属性值为0</li><li>元素可拥有负的 z-index 属性值，但会被body覆盖导致点击等事件响应出问题</li><li>z-index只能在同等级元素上作用 </li><li>z-index 具有继承性，父元素的z-index 影响子元素（拼爹）</li><li>若两个定位的元素z-index值相同或未指定，则位于 HTML 代码中最后的元素将显示在顶部（后来居上）。 </li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;定位布局（position）&quot;&gt;&lt;a href=&quot;#定位布局（position）&quot; class=&quot;headerlink&quot; title=&quot;定位布局（position）&quot;&gt;&lt;/a&gt;定位布局（&lt;code&gt;position&lt;/code&gt;）&lt;/h1&gt;&lt;p&gt;​    CSS定</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>笔记—HTML表单form</title>
